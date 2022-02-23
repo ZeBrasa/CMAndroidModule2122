@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="IF"/>
+    <style name="IF.AllowChildElevation">
+        <item name="android:clipChildren">false</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="IF.Ripple">
+        <item name="android:theme">@style/IF.RippleTheme</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+    <style name="IF.RippleTheme">
+        <item name="colorControlHighlight">@color/gray_400</item>
+    </style>
+
+
+</resources>

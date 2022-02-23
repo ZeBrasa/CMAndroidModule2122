@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "868406082586",
+    "firebase_url": "https://invisiblefriend-1efa3-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "invisiblefriend-1efa3",
+    "storage_bucket": "invisiblefriend-1efa3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868406082586:android:0042fb3dc87db51529a5a3",
+        "android_client_info": {
+          "package_name": "com.example.invisiblefriend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "868406082586-ioa0mfgkasvff5fvsf4vrmjuclbavgap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfxxb56XYzB-1breXKGonG_MGQfWSk6Oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "868406082586-ioa0mfgkasvff5fvsf4vrmjuclbavgap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
