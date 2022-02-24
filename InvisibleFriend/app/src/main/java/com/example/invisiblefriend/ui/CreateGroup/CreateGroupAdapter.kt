@@ -5,10 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CreateGroupAdapter(
     listener: CreateGroupView.FilterViewListener,
-    var users: MutableList<Users> = mutableListOf()
+    users: MutableList<Users> = mutableListOf()
 ) : RecyclerView.Adapter<CreateGroupAdapter.GroupViewHolder>(){
 
     private var listener = listener
+    private var users: MutableList<Users> = users
 
     inner class GroupViewHolder(val view: CreateGroupView) : RecyclerView.ViewHolder(view){
         fun bind(
@@ -16,7 +17,9 @@ class CreateGroupAdapter(
             listener: CreateGroupView.FilterViewListener
         ) {
             (itemView as CreateGroupView).run {
-                bind(users, listener)
+                if(users.getUsername()!="null"){
+                    bindNameUser(users, listener)
+                }
             }
         }
     }
@@ -67,7 +70,7 @@ class CreateGroupAdapter(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView){
         val tvUserName: TextView = itemView.
-        fun bind(usersList: Users){
+        fun bindNameUser(usersList: Users){
             tvUserName.setText(usersList.getUsername())
         }
     }

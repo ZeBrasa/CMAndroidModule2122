@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.invisiblefriend.MainActivity
 import com.example.invisiblefriend.databinding.ActivityUserGroupsBinding
-import com.example.invisiblefriend.ui.DetailsGroupActivity
+import com.example.invisiblefriend.ui.DetailsGroup.DetailsGroupActivity
 import com.example.invisiblefriend.ui.Groups
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -33,15 +33,11 @@ class UserGroupsActivity: AppCompatActivity(), UserGroupsView.UserGroupsViewList
         super.onCreate(savedInstanceState)
         binding = ActivityUserGroupsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.userGroupsToolbar.setNavigationOnClickListener { finish() }
         retrieveUserGroups()
         binding.userGroupsRecyclerView.run {
             adapter = userGroupsAdapter
             layoutManager = LinearLayoutManager(this@UserGroupsActivity, RecyclerView.VERTICAL, false)
-        }
-        binding.backButton.setOnClickListener{
-            val backMain = Intent(this, MainActivity::class.java)
-            backMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(backMain)
         }
 
 
@@ -53,6 +49,7 @@ class UserGroupsActivity: AppCompatActivity(), UserGroupsView.UserGroupsViewList
         intent.putExtra("EXTRA_CREATOR_NAME", groups.getCreatorID())
         intent.putStringArrayListExtra("EXTRA_MEMBERS", groups.getUsersInGroup())
         intent.putExtra("EXTRA_SORTEIO",groups.getSorteio())
+        //intent.putExtra("EXTRA_SHUFFLE_RESULTS",  groups.getListShuffle())
         startActivity(intent)
     }
 

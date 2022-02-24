@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DetailsGroupActivity">
+    tools:context=".ui.DetailsGroup.DetailsGroupActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/user_groups_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/ic_back_button"
         android:background="?attr/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/llDetailsGroup"
         app:popupTheme="@style/Theme.Invisiblefriend.PopupOverlay"
@@ -30,23 +31,15 @@
             android:layout_height="wrap_content"
             android:text="@string/creator_name" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/material_baseline_grid_2x"
-            android:text="Nao sei o que queres aqui escrito."
-            android:textColor="@color/black" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvListUsersGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/material_baseline_grid_2x"
-            app:layout_constraintBottom_toBottomOf="@+id/btCreateGroup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvGroupName" />
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvListUsersGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/material_baseline_grid_2x"
+                app:layout_constraintBottom_toBottomOf="@+id/btCreateGroup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvGroupName" />
         <Button
             android:id="@+id/btShuffle"
             style="@style/Widget.AppCompat.Button"
@@ -62,6 +55,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/rvListUsersGroup" />
+
+        <TextView
+            android:id="@+id/tvYourFriend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="TextView" />
+
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

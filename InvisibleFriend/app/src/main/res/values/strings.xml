@@ -48,8 +48,17 @@
     <string name="no_username">Welcome! What would you like to be called?</string>
     <string name="create_group">Create Group</string>
     <string name="user_groups">Your Groups</string>
-    <string name="details_group">Details Group</string>
+    <string name="details_group">Group Details</string>
     <string name="creator_name">Creator name: %s</string>
     <string name="raffle">Raffle</string>
-
+    <string name="update_profile">Update profile</string>
+    <string name="user_name">Username</string>
+    <string name="profile">Profile</string>
+    <string name="welcome_if">Welcome to Invisible Friend App</string>
+    <string name="Click_here">Click to create a group!</string>
+    <string name="have_missing_data">You have some missing data needed for this app to work properly! Please insert them and submit!</string>
+    <string name="have_no_missing_data">Your userdata is filled up properly, you can updated it in the fields below</string>
+    <string name="map">Map</string>
+    <string name="groups">Groups</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyATqaHUxwX-allfsrLT7dllwtp90g9s_Y0</string>
 </resources>

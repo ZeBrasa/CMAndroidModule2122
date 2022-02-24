@@ -12,7 +12,11 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/Theme.Invisiblefriend.PopupOverlay"
-        app:title="@string/create_group"/>
+        app:title="@string/create_group"
+        app:navigationIcon="@drawable/ic_back_button"
+        app:titleMarginStart="@dimen/material_baseline_grid_10x"
+        android:foregroundGravity="center"
+        tools:ignore="MissingConstraints" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -48,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/material_baseline_grid_2x"
                 app:layout_constraintBottom_toBottomOf="@+id/btCreateGroup"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/btCreateGroup"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tvGroupName" />
 

@@ -3,34 +3,20 @@ package com.example.invisiblefriend.ui.CreateGroup
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.collection.ArrayMap
-import androidx.collection.arrayMapOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.invisiblefriend.databinding.ActivityCreateGroupBinding
 import com.example.invisiblefriend.ui.Groups
 import com.example.invisiblefriend.ui.groupList.UserGroupsActivity
-import com.example.invisiblefriend.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class CreateGroupActivity : AppCompatActivity(), CreateGroupView.FilterViewListener{
     private var  userList: ArrayList<Users>? = null
 
-    /*
-    val usersTest = Users(
-        uid = "coisa",
-        username = "user coisa",
-        email = "coisa@coisa.pt",
-        phoneNumber = "000"
-    )
-    */
-
-    //private var usersDummy = mutableListOf(Users("asd", "Ana Perfeita", "sdsg", "sdjfg", isSelectedUser = true))
     private var users: ArrayList<Users> = arrayListOf()
 
     private var group: Groups = Groups()
-    //private var invited: ArrayMap<String, Boolean> = arrayMapOf()
     private var invited: ArrayList<String> = arrayListOf()
 
 
@@ -44,8 +30,8 @@ class CreateGroupActivity : AppCompatActivity(), CreateGroupView.FilterViewListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateGroupBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
+        binding.toolbar.setNavigationOnClickListener{finish()}
         //initRecyclerView()
         retrieveAllUsers()
         //setup adapter
@@ -82,20 +68,21 @@ class CreateGroupActivity : AppCompatActivity(), CreateGroupView.FilterViewListe
         group.setGroupName(binding.tvGroupName.text.toString())
         group.setUsersInGroup(invited)
         group.setSorteio(false)
-        group.setUniqueID(binding.tvGroupName.text.toString())
+        group.setUniqueID(auth.currentUser!!.uid+binding.tvGroupName.text.toString())
         println("Invited group$invited")
         println("Created group"+group.getUniqueID())
         //val groupListIntent = Intent(this, MainActivity::class.java)
         //key = refGroups.database.getReference("Groups").push().getKey().toString()
         //println("This is the key"+key)
-        refGroups = FirebaseDatabase.getInstance().reference.child("Groups").child(auth.currentUser!!.uid+group.getGroupName())
+        refGroups = FirebaseDatabase.getInstance().reference.child("Groups").child(group.getUniqueID())
         val groupHashMap = HashMap<String,Any>()
         groupHashMap["groupName"] = group.getGroupName()
         groupHashMap["uniqueID"] = group.getUniqueID()
         groupHashMap["sorteio"] = group.getSorteio()
         groupHashMap["creatorID"] = group.getCreatorID()
         groupHashMap["usersInGroup"] = group.getUsersInGroup()
-
+        groupHashMap["listFriends"] = group.getListFriends()
+        groupHashMap["listFriendsOf"] = group.getListFriendsOf()
         refGroups.updateChildren(groupHashMap)
             .addOnCompleteListener { task->
                 if(task.isSuccessful){
@@ -116,7 +103,7 @@ class CreateGroupActivity : AppCompatActivity(), CreateGroupView.FilterViewListe
                 users.clear()
                 for(snapshot in p0.children) {
                     val user: Users? = snapshot.getValue(Users::class.java)
-                    if(!(user!!.getUID()).equals(firebaseUserID))
+                    if(!(user!!.getUID()).equals(firebaseUserID) && user.getUsername() !="null")
                     {
                         users.add(user)
                     }

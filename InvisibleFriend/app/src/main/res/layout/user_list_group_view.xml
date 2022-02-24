@@ -9,18 +9,43 @@
     tools:orientation="horizontal"
     tools:parentTag="androidx.appcompat.widget.LinearLayoutCompat">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvName"
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/material_baseline_grid_0.5x"
         android:layout_marginEnd="@dimen/material_baseline_grid_0.5x"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:singleLine="true"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        tools:text="FriendName" />
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_baseline_grid_0.5x"
+            android:layout_marginEnd="@dimen/material_baseline_grid_0.5x"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            tools:text="FriendName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_baseline_grid_0.5x"
+            android:layout_marginEnd="@dimen/material_baseline_grid_0.5x"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textColor="@color/gray_400"
+            android:textSize="14sp"
+            tools:text="FriendEmail"
+            android:visibility="gone"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/cbSelect"

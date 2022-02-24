@@ -1,6 +1,8 @@
 package com.example.invisiblefriend.ui
 
-import android.util.ArrayMap
+import androidx.collection.ArrayMap
+import androidx.collection.arrayMapOf
+
 
 class Groups {
     private var uniqueID: String = ""
@@ -10,8 +12,8 @@ class Groups {
     // see if user accepted the invitation or not
     //private var usersInGroup: Map<String, Boolean> = mutableMapOf()
     private var usersInGroup: ArrayList<String> =  arrayListOf()
-    private var listShuffle: ArrayList<String> = arrayListOf()
-
+    private var listFriends: ArrayList<String> = arrayListOf()
+    private var listFriendsOf: ArrayList<String> = arrayListOf()
 
     constructor(
         groupName: String,
@@ -19,7 +21,8 @@ class Groups {
         sorteio: Boolean,
         creatorID: String,
         usersInGroup: ArrayList<String>,
-        listShuffle: ArrayList<String>,
+        listFriends: ArrayList<String>,
+        listFriendsOf : ArrayList<String>,
 
     ) {
         this.groupName = groupName
@@ -27,7 +30,8 @@ class Groups {
         this.sorteio = sorteio
         this.creatorID = creatorID
         this.usersInGroup = usersInGroup
-        this.listShuffle = listShuffle
+        this.listFriends = listFriends
+        this.listFriendsOf = listFriendsOf
 
     }
     constructor()
@@ -66,11 +70,17 @@ class Groups {
     fun setUsersInGroup(updatedUsersInGroup: ArrayList<String>){
         this.usersInGroup=updatedUsersInGroup
     }
-    fun getListShuffle(): ArrayList<String> {
-        return listShuffle
+    fun getListFriends():ArrayList<String> {
+        return listFriends
     }
-    fun setListShuffle(updatedListShuffle: ArrayList<String>){
-        this.listShuffle=updatedListShuffle
+    fun setListFriends(updatedListFriends: ArrayList<String>){
+        this.listFriends=updatedListFriends
+    }
+    fun getListFriendsOf():ArrayList<String> {
+        return listFriendsOf
+    }
+    fun setListFriendsOf(updatedListFriendsOf: ArrayList<String>){
+        this.listFriendsOf=updatedListFriendsOf
     }
 
 }

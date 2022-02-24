@@ -104,7 +104,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
                     //getEmailCredentials()
-                    Toast.makeText(baseContext, getString(R.string.authentication_successfully), Toast.LENGTH_LONG).show()
+                    //Toast.makeText(baseContext, getString(R.string.authentication_successfully), Toast.LENGTH_LONG).show()
                     val user = auth.currentUser
                     updateUI(user)
                 } else {
@@ -133,6 +133,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                         (task.exception as FirebaseAuthException)?.errorCode == "ERROR_INVALID_EMAIL" ->Toast.makeText(this@LoginActivity, "INVALID EMAIL",
                             Toast.LENGTH_SHORT).show()
                         (task.exception as FirebaseAuthInvalidCredentialsException)?.errorCode == "ERROR_PASSWORD_NOT_FOUND" -> Toast.makeText(this@LoginActivity, "Use Facebook to athenticate",
+                            Toast.LENGTH_SHORT).show()
+                        (task.exception as FirebaseAuthInvalidCredentialsException)?.errorCode == "ERROR_INVALID_PASSWORD"-> Toast.makeText(this@LoginActivity, "Invalid password, try again",
                             Toast.LENGTH_SHORT).show()
                         else -> {
                             val builder = AlertDialog.Builder(this)

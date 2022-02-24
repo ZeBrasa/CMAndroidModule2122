@@ -7,6 +7,8 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.example.invisiblefriend.R
 import com.example.invisiblefriend.databinding.UserListGroupViewBinding
 import com.example.invisiblefriend.ui.UserAdapter
@@ -33,11 +35,14 @@ class CreateGroupView @JvmOverloads constructor(
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_VERTICAL
         layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        minimumHeight = resources.getDimensionPixelSize(R.dimen.material_baseline_grid_8_5x)
+        minimumHeight = resources.getDimensionPixelSize(R.dimen.material_baseline_grid_6_5x)
     }
 
-    fun bind(users: Users, listener: FilterViewListener?) {
+    fun bindNameUser(users: Users, listener: FilterViewListener?) {
         users.run {
+
+            binding.tvEmail.isGone = true
+            binding.cbSelect.isVisible = true
             binding.tvName.text = getUsername()
             binding.cbSelect.isChecked = getIsSelected()
         }
@@ -46,6 +51,13 @@ class CreateGroupView @JvmOverloads constructor(
             binding.cbSelect.isChecked = !users.getIsSelected()
             listener?.onUserClick(users)
         }
+    }
+
+    fun bindNameAndEmailUser(userName: String, emailUser: String?, listener: FilterViewListener?) {
+        binding.tvEmail.isVisible = true
+        binding.cbSelect.isGone = true
+        binding.tvName.text = userName
+        binding.tvEmail.text = emailUser
     }
 
     interface FilterViewListener {

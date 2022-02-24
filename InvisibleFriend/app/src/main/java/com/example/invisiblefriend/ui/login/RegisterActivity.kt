@@ -64,7 +64,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                         userHashMap["username"] = username
                         userHashMap["phoneNumber"] = phoneNumber
                         userHashMap["inviteGroups"]
-                        userHashMap["acceptedGroups"]
+                        userHashMap["shuffledGroups"]
 
                         refUsers.updateChildren(userHashMap)
                             .addOnCompleteListener { task->

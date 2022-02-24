@@ -12,7 +12,7 @@ class Users{
     private var email: String =""
     private var phoneNumber: String = ""
     private var inviteGroups: ArrayMap<String, Boolean>? = null
-    private var acceptedGroups: ArrayMap<String,Boolean>? = null
+    private var shuffledGroups: ArrayMap<String,String>? = null
     private var isSelectedUser : Boolean = false
 
 /*
@@ -35,7 +35,7 @@ data class Users(
         email: String,
         phoneNumber: String,
         inviteGroups: ArrayMap<String, Boolean>,
-        acceptedGroups: ArrayMap<String, Boolean>,
+        shuffledGroups: ArrayMap<String, String>,
         isSelectedUser: Boolean
     ) {
         this.uid = uid
@@ -43,7 +43,7 @@ data class Users(
         this.email = email
         this.phoneNumber = phoneNumber
         this.inviteGroups = inviteGroups
-        this.acceptedGroups = acceptedGroups
+        this.shuffledGroups = shuffledGroups
         this.isSelectedUser = isSelectedUser
     }
 
@@ -88,12 +88,13 @@ data class Users(
     fun setInvitedGroups(updatedInviteGroups:ArrayMap<String,Boolean>){
         this.inviteGroups=updatedInviteGroups
     }
-    fun getAcceptedGroups(): ArrayMap<String,Boolean>{
-        return acceptedGroups
-    }
-    fun setAcceptedGroups(updatedAcceptedGroups:ArrayMap<String,Boolean>){
-        this.acceptedGroups=updatedAcceptedGroups
-    }
     */
+    fun getShuffledGroups(): ArrayMap<String, String>? {
+        return shuffledGroups
+    }
+    fun setAcceptedGroups(updatedShuffledGroups:ArrayMap<String,String>){
+        this.shuffledGroups=updatedShuffledGroups
+    }
+
 }
 

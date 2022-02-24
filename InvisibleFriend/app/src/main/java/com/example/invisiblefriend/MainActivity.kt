@@ -17,11 +17,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.example.invisiblefriend.databinding.ActivityMainBinding
 import com.example.invisiblefriend.ui.CreateGroup.CreateGroupActivity
 import com.example.invisiblefriend.ui.UserAdapter
 import com.example.invisiblefriend.ui.CreateGroup.Users
+import com.example.invisiblefriend.ui.MapsActivity
+import com.example.invisiblefriend.ui.Profile.UserProfileActivity
+import com.example.invisiblefriend.ui.groupList.UserGroupsActivity
 import com.example.invisiblefriend.ui.login.LoginActivity
 import com.example.invisiblefriend.ui.message.MessageAdapter
 import com.facebook.AccessToken
@@ -50,7 +54,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private val updatePhoneNumber: EditText? = null
     private val myRef: DatabaseReference? = null
 
-    private var userAdapter: UserAdapter? =null
+    private var userAdapter: UserAdapter? = null
     private var mUsers: ArrayList<Users> = arrayListOf()
 
 
@@ -65,26 +69,22 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
+
         auth = FirebaseAuth.getInstance()
+
         binding.appBarMain.fab.setOnClickListener { view ->
             val createGroupIntent = Intent(this, CreateGroupActivity::class.java)
             startActivity(createGroupIntent)
         }
 
-        if(auth.currentUser?.displayName ==null){
+        if (auth.currentUser?.displayName == null) {
             val builder = AlertDialog.Builder(this)
-            val input = EditText(this)
             builder.setMessage(getString(R.string.no_username))
                 .setCancelable(false)
                 .setPositiveButton(
-                    getString(R.string.register_number)
+                    getString(R.string.update_profile)
                 ) { _, _ ->
-                    input.hint = "Enter Username"
-                    input.inputType = InputType.TYPE_CLASS_TEXT
-                    builder.setView(input)
-
-                    //startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
-
+                    startActivity(Intent(this@MainActivity, UserProfileActivity::class.java))
                 }
                 .setNegativeButton(
                     getString(R.string.maybe_later)
@@ -92,13 +92,13 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             val alert = builder.create()
             alert.show()
         }
-        else if( auth.currentUser?.phoneNumber ==null){
+        /*else if( auth.currentUser?.phoneNumber == null){
             val builder = AlertDialog.Builder(this)
             val input = EditText(this)
             builder.setMessage(getString(R.string.user_without_phoneNumber))
                 .setCancelable(false)
                 .setPositiveButton(
-                    getString(R.string.register_number)
+                    getString(R.string.update_profile)
                 ) { _, _ ->
                     input.setHint("Enter Text")
                     input.inputType = InputType.TYPE_CLASS_TEXT
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 ) { dialog, id -> dialog.cancel() }
             val alert = builder.create()
             alert.show()
-        }
+        }*/
 
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -124,69 +124,55 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         updateUserInformation(navigationView)
 
 
-        val request = GraphRequest.newMyFriendsRequest(
-            AccessToken.getCurrentAccessToken(),
-            object : GraphRequest.GraphJSONArrayCallback {
-                override fun onCompleted(jsonArray: JSONArray?, graphResponse: GraphResponse?) {
-                    println("this is my friends list"+graphResponse.toString())
-                }
-            })
-        val bundle = null
-
-        val graphRequestAsyncTask = GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-            "/me/friends",
-            bundle,
-            HttpMethod.GET,
-            { response ->
-                try {
-                    val rawName = response.getJSONObject()!!.getJSONArray("data")
-                    var friendList = "{\"friendlist\":$rawName}"
-                    //String friendlist =  rawName.toString() ;
-                    Log.d("TAG", "response of friendlist is : $friendList")
-
-
-                    /* //coding for insert data in db.
-
-                                String result = JSONUtils.insertUserprofile(imagePath, name, fbid, friendList);
-
-                                Log.d("TAG", "Result of fb is : " + result);
-
-                                if (result.toLowerCase().contains("success")) {
-
-                                    myPreferences.setFBUserId(Constant.PREFERENCE_LOGIN_FB, fbid);
-                                    //LoginManager.getInstance().logOut();
-                                }*/
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-            }).executeAsync()
-        //  Glide.with(this).load("${auth.currentUser?.photoUrl}?access_token=${AccessToken.getCurrentAccessToken()}").into(userImage!!)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_groups, R.id.nav_map, R.id.nav_profile, R.id.nav_logOut
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setNavigationItemSelectedListener {
-            if(it.itemId == R.id.nav_logOut){
+            if (it.itemId == R.id.nav_logOut) {
                 auth.signOut()
                 LoginManager.getInstance().logOut()
                 val logoutIntent = Intent(this, LoginActivity::class.java)
-                logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                logoutIntent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(logoutIntent)
             }
+            if (it.itemId == R.id.nav_groups) {
+                val groupsIntent = Intent(this, UserGroupsActivity::class.java)
+                startActivity(groupsIntent)
+            }
+            if (it.itemId == R.id.nav_home) {
+
+                val homeIntent = Intent(this, MainActivity::class.java)
+                startActivity(homeIntent)
+            }
+            if (it.itemId == R.id.nav_profile) {
+                val profileIntent = Intent(this, UserProfileActivity::class.java)
+                startActivity(profileIntent)
+            }
+
+            if (it.itemId == R.id.nav_map) {
+                val mapsIntent = Intent(this, MapsActivity::class.java)
+                startActivity(mapsIntent)
+            }
+
+
+
+
+
             false
 
         }
         //navView.setupWithNavController(navController)
 
     }
-    fun updateProfile(){
+
+    fun updateProfile() {
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -203,20 +189,22 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        if(currentUser == null){
+        if (currentUser == null) {
             startActivity(Intent(this@MainActivity, LoginActivity::class.java))
         }
     }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.nav_logOut) {
-           auth.signOut()
+            auth.signOut()
             val logoutIntent = Intent(this, LoginActivity::class.java)
             logoutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(logoutIntent)
         }
         return true
     }
-    fun updateUserInformation(navigationView: NavigationView){
+
+    fun updateUserInformation(navigationView: NavigationView) {
         val header = navigationView?.getHeaderView(0)
         val userEmail = header?.findViewById<TextView>(R.id.tvEmail)
         val userName = header?.findViewById<TextView>(R.id.tvUsername)
@@ -225,10 +213,11 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         userName?.text = auth.currentUser?.displayName
 
         val photoUrl: String =
-            auth.currentUser?.photoUrl.toString()+ "/&access_token=" + AccessToken.getCurrentAccessToken()?.token //+"?fields={fieldname_of_type_ProfilePictureSource}"
+            auth.currentUser?.photoUrl.toString() + "/&access_token=" + AccessToken.getCurrentAccessToken()?.token //+"?fields={fieldname_of_type_ProfilePictureSource}"
         println("Photo url after login" + photoUrl)
         Glide.with(this).load(photoUrl).into(userImage!!)
     }
+
     /*
     class UserService {
         var user = FirebaseAuth.getInstance().currentUser
@@ -263,7 +252,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             Toast.makeText(this, "User mobile not updated.", Toast.LENGTH_SHORT).show()
         }
     }
-
+}
+/*
     private fun searchForUsersToInvite(str: String){
         var firebaseUserID = FirebaseAuth.getInstance().currentUser!!.uid
         var querryUsers = FirebaseDatabase.getInstance().reference
@@ -298,7 +288,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
 
 // val url: String ="https://graph.facebook.com/v2.7/me/friends?access_token="+ AccessToken.getCurrentAccessToken()?.token
-/*
+
 val c: Cursor? = contentResolver.query(
     RawContacts.CONTENT_URI,
     arrayOf(RawContacts.CONTACT_ID, RawContacts.DISPLAY_NAME_PRIMARY),
@@ -314,4 +304,34 @@ while (c.moveToNext()) {
     // ContactsContract.Contacts table or any of the other related ones.
     myWhatsappContacts.add(c.getString(contactNameColumn))
 }
-println("My whatsapp contacts"+myWhatsappContacts)*/
+println("My whatsapp contacts"+myWhatsappContacts)
+
+        val request = GraphRequest.newMyFriendsRequest(
+            AccessToken.getCurrentAccessToken(),
+            object : GraphRequest.GraphJSONArrayCallback {
+                override fun onCompleted(jsonArray: JSONArray?, graphResponse: GraphResponse?) {
+                    println("this is my friends list"+graphResponse.toString())
+                }
+            })
+        val bundle = null
+
+        val graphRequestAsyncTask = GraphRequest(
+            AccessToken.getCurrentAccessToken(),
+            "/me/friends",
+            bundle,
+            HttpMethod.GET,
+            { response ->
+                try {
+                    val rawName = response.getJSONObject()!!.getJSONArray("data")
+                    var friendList = "{\"friendlist\":$rawName}"
+                    //String friendlist =  rawName.toString() ;
+                    Log.d("TAG", "response of friendlist is : $friendList")
+
+
+
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            }).executeAsync()
+
+*/

@@ -21,4 +21,20 @@
         android:textColor="@color/black"
         android:textSize="14sp"
         tools:text="GroupName" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSorteio"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:duplicateParentState="false"
+        android:visibility="gone"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginEnd="@dimen/material_baseline_grid_1.5x"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Raffle done!" />
+
 </merge>
